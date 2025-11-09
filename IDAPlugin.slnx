@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="IDAPlugin/IDAPlugin.vcxproj" Id="e312f971-fe03-4350-ae07-d49a1ca2f21b" />
+</Solution>
