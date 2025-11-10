@@ -181,8 +181,8 @@ __declspec(dllexport) plugin_t PLUGIN = {
     init,               // Initialization function
     term,               // Cleanup function
     run,                // Main function
-    "Description",
-    "Help",
+    "Open the Script Editor for LUDA",
+    ":shrug:",
     "LUDA - Interface",
-    "Wanted_Hotkey" // Example: "Ctrl-Alt-S"
+    "Ctrl-Alt-L" // Example: "Ctrl-Alt-S"
 };
