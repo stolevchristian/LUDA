@@ -1,4 +1,5 @@
 #pragma once
+#define __EA64__
 #include <string>
 #include <ida.hpp>
 #include <kernwin.hpp>

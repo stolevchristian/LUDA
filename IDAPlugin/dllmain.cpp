@@ -14,15 +14,12 @@
 #include <lines.hpp>
 #include <Richedit.h>
 
+#include "Executor/Executor.h"
+
 #define IDC_EDIT 1001
 #define IDC_RUN_BTN 1002
 #define IDC_CLOSE_BTN 1003
-#include "Executor/Executor.h"
 Executor* executor;
-
-
-#include <funcs.hpp>
-
 
 // Define the plugin entry point
 plugmod_t* idaapi init() {
