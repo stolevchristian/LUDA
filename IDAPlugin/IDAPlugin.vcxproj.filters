@@ -108,6 +108,9 @@
     <ClCompile Include="Lua\lzio.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Executor\Executor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ida_sdk\allins.hpp">
@@ -387,6 +390,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Lua\lzio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor\Executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor\Libraries\print.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor\Libraries\hexrays.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor\Libraries\functions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor\Libraries\xrefs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Executor\Libraries\strings.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

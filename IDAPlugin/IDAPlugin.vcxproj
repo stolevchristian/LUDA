@@ -113,18 +113,19 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;IDAPLUGIN_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;IDAPLUGIN_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0601;BOOST_DATE_TIME_NO_LIB;BOOST_REGEX_NO_LIB;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>ida.lib;idalib.lib;network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ida.lib;idalib.lib;network.lib;ws2_32.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Executor\Executor.cpp" />
     <ClCompile Include="Lua\lapi.c" />
     <ClCompile Include="Lua\lauxlib.c" />
     <ClCompile Include="Lua\lbaselib.c" />
@@ -181,6 +183,12 @@
     <ClCompile Include="Lua\lzio.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Executor\Executor.h" />
+    <ClInclude Include="Executor\Libraries\functions.hpp" />
+    <ClInclude Include="Executor\Libraries\hexrays.hpp" />
+    <ClInclude Include="Executor\Libraries\print.hpp" />
+    <ClInclude Include="Executor\Libraries\strings.hpp" />
+    <ClInclude Include="Executor\Libraries\xrefs.hpp" />
     <ClInclude Include="ida_sdk\allins.hpp" />
     <ClInclude Include="ida_sdk\allow_deprecated.hpp" />
     <ClInclude Include="ida_sdk\auto.hpp" />
