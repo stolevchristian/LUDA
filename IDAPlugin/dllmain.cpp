@@ -1,4 +1,4 @@
-#define _SILENCE_CXX20_IS_POD_DEPRECATION_WARNING
+﻿#define _SILENCE_CXX20_IS_POD_DEPRECATION_WARNING
 
 #include <windows.h>
 #include <cstdio>
@@ -12,6 +12,7 @@
 #include <hexrays.hpp>
 #include <ua.hpp>
 #include <lines.hpp>
+#include <Richedit.h>
 
 #define IDC_EDIT 1001
 #define IDC_RUN_BTN 1002
@@ -86,6 +87,7 @@ public:
         switch (msg) {
         case WM_COMMAND: {
             int control_id = LOWORD(wparam);
+            int notification = HIWORD(wparam);
             if (control_id == IDC_RUN_BTN) {
                 pThis->run_script();
             }
@@ -105,11 +107,14 @@ public:
 
     void create_controls() {
         // Multiline textbox
-        edit_hwnd = CreateWindowEx(
+        LoadLibrary("Msftedit.dll"); // Needed for RICHEDIT50W
+
+        edit_hwnd = CreateWindowExW(
             WS_EX_CLIENTEDGE,
-            "EDIT",
-            "",
-            WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | WS_VSCROLL | WS_HSCROLL,
+            MSFTEDIT_CLASS, // instead of "EDIT"
+            L"",
+            WS_CHILD | WS_VISIBLE | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL |
+            WS_VSCROLL | WS_HSCROLL,
             10, 10, 470, 300,
             hwnd, (HMENU)IDC_EDIT, nullptr, nullptr
         );
