@@ -43,7 +43,7 @@ end
 
 **Made with ❤️ for the game**
 
-*Building better reverse engineering tools, ome bug at a time!*
+*Building better reverse engineering tools, one bug at a time!*
 
 [⭐ Star this project if you find it useful!](https://github.com/stolevchristian/LUDA)
 
