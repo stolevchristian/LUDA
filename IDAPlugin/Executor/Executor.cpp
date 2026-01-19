@@ -5,6 +5,7 @@
 #include "Libraries/functions.hpp"
 #include "Libraries/xrefs.hpp"
 #include "Libraries/strings.hpp"
+#include "Libraries/patching.hpp"
 
 Executor::Executor()
 {
@@ -38,7 +39,7 @@ bool Executor::initialize()
 	lua_register(this->L, "disassemble", (lua_CFunction)LUDA::Library::c_disassemble);
 
 	// functions
-	lua_register(this->L, "get_function", (lua_CFunction)LUDA::Library::c_disassemble);
+	lua_register(this->L, "get_function", (lua_CFunction)LUDA::Library::c_get_func);
 	lua_register_alias(this->L, "get_function", "getfunction");
 	lua_register_alias(this->L, "get_function", "get_func");
 	lua_register_alias(this->L, "get_function", "getfunc");
@@ -61,6 +62,23 @@ bool Executor::initialize()
 	lua_register(this->L, "to_hex", (lua_CFunction)LUDA::Library::c_to_hex);
 	lua_register_alias(this->L, "to_hex", "tohex");
 	lua_register_alias(this->L, "to_hex", "hex");
+
+	// patching
+	lua_register(this->L, "patch_bytes", (lua_CFunction)LUDA::Library::c_patch_bytes);
+	lua_register_alias(this->L, "patch_bytes", "patchbytes");
+	lua_register_alias(this->L, "patch_bytes", "patch");
+
+
+	lua_register(this->L, "get_bytes", (lua_CFunction)LUDA::Library::c_get_bytes);
+	lua_register_alias(this->L, "get_bytes", "read_memory");
+	lua_register_alias(this->L, "get_bytes", "readmem");
+	lua_register_alias(this->L, "get_bytes", "read");
+
+	lua_register(this->L, "get_imagebase", (lua_CFunction)LUDA::Library::c_get_imagebase);
+
+	lua_register(this->L, "get_first_address", (lua_CFunction)LUDA::Library::c_get_first_address);
+
+	lua_register(this->L, "get_last_address", (lua_CFunction)LUDA::Library::c_get_last_address);
 
 	std::string print_script = R"(
 local pp = {
