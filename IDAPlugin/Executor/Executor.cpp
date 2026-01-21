@@ -38,7 +38,7 @@ bool Executor::initialize()
 	lua_register(this->L, "disassemble", (lua_CFunction)LUDA::Library::c_disassemble);
 
 	// functions
-	lua_register(this->L, "get_function", (lua_CFunction)LUDA::Library::c_disassemble);
+	lua_register(this->L, "get_function", (lua_CFunction)LUDA::Library::c_get_func);
 	lua_register_alias(this->L, "get_function", "getfunction");
 	lua_register_alias(this->L, "get_function", "get_func");
 	lua_register_alias(this->L, "get_function", "getfunc");
