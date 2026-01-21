@@ -8,7 +8,7 @@
 > **High-performance Lua scripting for IDA Pro's SDK. Fast, lightweight, and expressive binary analysis automation.**
 
 > [!IMPORTANT]  
-> **LUDA** is still in development and is not ready for production. Expect lack of error handling, bugs and crashes.
+> **LUDA** is based on Lua 5.1 which makes it mostly 32-bit compatible. This HAS BEEN FIXED in the unpublished version of LUDA by swapping 5.1 for Lua 5.5. Release coming shortly.
 
 ---
 
