@@ -11,7 +11,10 @@
 > **LUDA** is based on Lua 5.1 which makes it mostly 32-bit compatible. This HAS BEEN FIXED in the unpublished version of LUDA by swapping 5.1 for Lua 5.5. Release coming shortly.
 
 ---
-
+## BETA Preview
+#### Not yet released or pushed but will soon be replacing the current LUDA as we know it.
+![Beta Preview](https://i.imgur.com/KOU4bun.png)
+---
 LUDA provides **direct SDK access** from Lua, enabling rapid prototyping and automation of reverse engineering workflows in IDA Pro 9.2. Unlike Python or IDC scripting, Lua offers minimal overhead, exceptional performance, and a clean API designed specifically for security research and binary analysis.
 
 ---
