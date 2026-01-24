@@ -100,6 +100,46 @@ local bytes = assemble("mov rax, 0xF")
 -- bytes = { 0x48, 0xC7, 0xC0, 0x0F, 0x00, 0x00, 0x00 }
 ```
 
+### Decompile
+```lua
+local function_address = 0xDEADBEEF
+local disassembly = hexrays.decompile(function_address)
+print(disassembly)
+--[[
+_QWORD *__fastcall sub_deadbeef(_QWORD *a1)
+{
+  *a1 = HIDWORD(*a1) | (*a1 << 32);
+  return a1;
+}
+]]--
+```
+
+### Xrefs
+```lua
+local function_address = 0xDEADBEEF
+
+for i,v in next, xrefs.get(function_address) do
+  print(i, "0x" .. hex(v))
+end
+--[[
+1	0x180003F03
+2	0x180004288
+3	0x1800043E3
+4	0x180004768
+5	0x1800048C3
+6	0x180004C48
+7	0x1800FCB77
+8	0x1800FCD1C
+9	0x1800FDCC5
+]]--
+```
+
+### Functions
+```lua
+local function_address = get_function("_IntegrityCheck__text") -- or get_function(0xDEADCODE)
+
+print("Integrity check:", "0x" .. hex(function_address))
+```
 ---
 
 ## Changelog
