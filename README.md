@@ -1,77 +1,140 @@
+# LUDA
+
 ![LUDA Banner](LUDA.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![IDA Version](https://img.shields.io/badge/IDA-9.X-blue)
-![Lua Version](https://img.shields.io/badge/Lua-5.1-2C2D72?logo=lua)
-![Status](https://img.shields.io/badge/Status-Active-green)
+![Lua Version](https://img.shields.io/badge/Lua-5.5-2C2D72?logo=lua)
+![Status](https://img.shields.io/badge/Status-In_Development-orange)
 
-> **High-performance Lua scripting for IDA Pro's SDK. Fast, lightweight, and expressive binary analysis automation.**
+High-performance Lua scripting for IDA Pro's SDK. Direct SDK bindings, minimal overhead, built for x86_64 binary analysis.
 
-> [!IMPORTANT]  
-> **LUDA** is still WIP and is not production ready. It has recently switched to using Lua 5.5 instead of Lua 5.1 due to Lua 5.1 not supporting 64-bit correctly.
+> **Note:** LUDA is under active development and not yet production ready.
 
-## MADE FOR x86_64, ANYTHING ELSE IS NOT SUPPORTED OR PLANNED.
 ---
-## UI Preview
-#### The user interface is not yet public but if you want to create your own you can do so by reading comm protocol in ludasocket.h and ludasocket.cpp.
-![Beta Preview](https://i.imgur.com/KOU4bun.png)
----
-LUDA provides **direct SDK access** from Lua, enabling rapid prototyping and automation of reverse engineering workflows in IDA Pro 9.2. Unlike Python or IDC scripting, Lua offers minimal overhead, exceptional performance, and a clean API designed specifically for security research and binary analysis.
+
+## Overview
+
+LUDA provides direct IDA SDK access from Lua, enabling rapid prototyping and automation of reverse engineering workflows. Lua's minimal overhead and clean syntax make it ideal for performance-critical analysis pipelines.
+
+**Target Platform:** x86_64 only. Other architectures are not supported.
 
 ---
 
 ## Features
 
-- ✅ **Direct IDA SDK Bindings** — Call native SDK functions from Lua without wrappers or proxies
-- ✅ **Performance Optimized** — Lua's speed makes complex analysis pipelines responsive
-- ✅ **Clean API** — Intuitive bindings that feel natural for IDA scripting
-- ✅ **Rapid Prototyping** — Fast iteration for security research and vulnerability analysis
-- ✅ **Lightweight** — Minimal dependencies, embeddable in custom workflows
+- **Direct SDK Bindings** — Call native IDA SDK functions without wrappers or proxies
+- **Low Overhead** — Lua's lightweight runtime keeps complex analysis responsive  
+- **Clean API** — Intuitive bindings designed for reverse engineering workflows
+- **Assembler Integration** — Convert assembly to bytes via Keystone engine
+- **Extensible** — Minimal dependencies, easy to integrate into custom tooling
 
 ---
 
+## Installation
+
+1. Download the latest release or build from source
+2. Place `LUDA.dll` in your IDA plugins folder: `<IDA_DIR>/plugins/`
+3. Restart IDA Pro
+
+### Building from Source
+```bash
+git clone https://github.com/stolevchristian/LUDA.git
+cd LUDA
+```
+
+#### Dependencies
+
+**Keystone Engine** — Required for assembly support.
+
+Download a prebuilt library from [keystone-engine.org](https://www.keystone-engine.org/download/) or build from source:
+```bash
+git clone https://github.com/keystone-engine/keystone.git
+cd keystone && mkdir build && cd build
+cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded ..
+cmake --build . --config Release
+```
+
+Place `keystone.lib` in the `keystone/` folder.
+
+#### Build
+
+Open in CLion or build via CMake:
+```bash
+mkdir build && cd build
+cmake -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release ..
+cmake --build . --config Release
+```
+
+---
+
+## Usage
+
 ### Read Memory
 ```lua
--- Read Template
--- Replace the address with your own
+local address = 0xDEADBEEF
+local bytes = memory.read(address, 5)
 
-local data_address = 0xDEADBEEF
-local bytes = memory.read(data_address, 5) -- Read 5 bytes
-for i,v in next, bytes do
-  print(i, v)
+for i, v in ipairs(bytes) do
+    print(string.format("0x%02X", v))
 end
 ```
 
 ### Write Memory
 ```lua
--- Write Template
--- Replace the address with your own
-
-local data_address = 0xDEADBEEF
-memory.write(data_address, {0xCC,0xCC})
+local address = 0xDEADBEEF
+memory.write(address, {0xCC, 0xCC})
 ```
 
 ### Disassemble
 ```lua
--- Disassemble Template
--- Replace the address with your own
+local func_addr = 0xDEADBEEF
+local disasm = hexrays.disassemble(func_addr)
 
-local function_address = 0xDEADBEEF
-local disassembly = hexrays.disassemble(function_address)
-print(table.concat({
-  "The function", 
-  "0x" .. hex(function_address), 
-  "has", #disassembly, "instructions."
-}, " "))
+print(string.format("Function at 0x%X has %d instructions", func_addr, #disasm))
 ```
+
+### Assemble
+```lua
+local bytes = assemble("mov rax, 0xF")
+-- bytes = { 0x48, 0xC7, 0xC0, 0x0F, 0x00, 0x00, 0x00 }
+```
+
+---
+
+## Changelog
+
+### v0.2.0 — *January 2025*
+- Ported build system from Visual Studio to CLion/CMake
+- Added Keystone assembler integration (`assemble()` function)
+- Upgraded from Lua 5.1 to Lua 5.5 for proper 64-bit support
+- Improved memory read/write API stability
+
+### v0.1.0 — *Initial Release*
+- Core IDA SDK bindings
+- Memory read/write operations
+- Hex-Rays disassembly support
+- Socket-based communication protocol for external UI
+
+---
+
+## Roadmap
+
+- [ ] Pattern scanning API
+- [ ] Function signature matching
+- [ ] Struct/type creation bindings
+- [ ] Documentation site
+
+---
+
+## License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
 ---
 
 <div align="center">
 
-**Made with ❤️ for the game**
-
-*Building better reverse engineering tools, one bug at a time!*
-
-[⭐ Star this project if you find it useful!](https://github.com/stolevchristian/LUDA)
+[GitHub](https://github.com/stolevchristian/LUDA)
 
 </div>
