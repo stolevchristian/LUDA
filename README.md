@@ -8,11 +8,11 @@
 > **High-performance Lua scripting for IDA Pro's SDK. Fast, lightweight, and expressive binary analysis automation.**
 
 > [!IMPORTANT]  
-> **LUDA** is based on Lua 5.1 which makes it mostly 32-bit compatible. This HAS BEEN FIXED in the unpublished version of LUDA by swapping 5.1 for Lua 5.5. Release coming shortly.
+> **LUDA** is still WIP and is not production ready. It has recently switched to using Lua 5.5 instead of Lua 5.1 due to Lua 5.1 not supporting 64-bit correctly.
 
 ---
-## BETA Preview
-#### Not yet released or pushed but will soon be replacing the current LUDA as we know it.
+## UI Preview
+#### The user interface is not yet public but if you want to create your own you can do so by reading comm protocol in ludasocket.h and ludasocket.cpp.
 ![Beta Preview](https://i.imgur.com/KOU4bun.png)
 ---
 LUDA provides **direct SDK access** from Lua, enabling rapid prototyping and automation of reverse engineering workflows in IDA Pro 9.2. Unlike Python or IDC scripting, Lua offers minimal overhead, exceptional performance, and a clean API designed specifically for security research and binary analysis.
@@ -29,17 +29,40 @@ LUDA provides **direct SDK access** from Lua, enabling rapid prototyping and aut
 
 ---
 
-### Basic Usage
+### Read Memory
 ```lua
--- Simple script
-local target = get_function("_verifyIntegrity")
-local xrefs  = get_xrefs(target)
+-- Read Template
+-- Replace the address with your own
 
-for idx, ref in next, xrefs do
-	print("anticheat called at:", hex(ref))
+local data_address = 0xDEADBEEF
+local bytes = memory.read(data_address, 5) -- Read 5 bytes
+for i,v in next, bytes do
+  print(i, v)
 end
 ```
 
+### Write Memory
+```lua
+-- Write Template
+-- Replace the address with your own
+
+local data_address = 0xDEADBEEF
+memory.write(data_address, {0xCC,0xCC})
+```
+
+### Disassemble
+```lua
+-- Disassemble Template
+-- Replace the address with your own
+
+local function_address = 0xDEADBEEF
+local disassembly = hexrays.disassemble(function_address)
+print(table.concat({
+  "The function", 
+  "0x" .. hex(function_address), 
+  "has", #disassembly, "instructions."
+}, " "))
+```
 ---
 
 <div align="center">
