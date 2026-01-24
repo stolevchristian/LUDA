@@ -49,19 +49,14 @@ void idaapi term() {
     /* todo */
 }
 
-bool idaapi run(size_t arg) {
-    msg("Plugin started!\n");
-    return true;
-}
-
 __declspec(dllexport) plugin_t PLUGIN = {
     IDP_INTERFACE_VERSION,
-    PLUGIN_PROC,
+    PLUGIN_HIDE,
     init,
     term,
-    run,
+    nullptr,
     "Launch the LUDA WS server",
     ":shrug:",
     "LUDA",
-    "Ctrl-Alt-L"
+    NULL
 };
