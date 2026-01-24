@@ -13,40 +13,40 @@
 #include <Executor/Executor.h>
 
 Executor* executor;
-
-// Define the plugin entry point
+bool has_initiated = false;
 plugmod_t* idaapi init() {
-    executor = new Executor();
+    if (!has_initiated)
+    {
+        executor = new Executor();
 
-    luda::SetScriptCallback([](const std::string& script) {
-        executor->run_script(script);
-    });
-
-    // Optional: connection state callback
-    luda::SetConnectionCallback([](bool connected) {
-        if (connected) {
-            msg("[LUDA] UI connected\n");
-        }
-        else {
-            msg("[LUDA] UI disconnected!\n");
-        }
+        luda::SetScriptCallback([](const std::string& script) {
+            executor->run_script(script);
         });
 
-    // Start the WebSocket server on port 8080
-    if (luda::Start(8080)) {
-        msg("[LUDA] Server started on port 8080\n");
-        executor->initialize();
-    }
-    else {
-        msg("[LUDA] Failed to start server\n");
+        luda::SetConnectionCallback([](bool connected) {
+            if (connected) {
+                msg("[LUDA] UI connected\n");
+            }
+            else {
+                msg("[LUDA] UI disconnected!\n");
+            }
+        });
+
+        if (luda::Start(8080)) {
+            msg("[LUDA] Server started on port 8080\n");
+            executor->initialize();
+            has_initiated = true;
+        }
+        else {
+            msg("[LUDA] Failed to start server\n");
+        }
     }
 
     return PLUGIN_OK;
 }
 
 void idaapi term() {
-    // for some reason crashes startup
-    //delete[] executor;
+    /* todo */
 }
 
 bool idaapi run(size_t arg) {
@@ -56,12 +56,12 @@ bool idaapi run(size_t arg) {
 
 __declspec(dllexport) plugin_t PLUGIN = {
     IDP_INTERFACE_VERSION,
-    PLUGIN_PROC,         // Plugin flags
-    init,               // Initialization function
-    term,               // Cleanup function
-    run,                // Main function
+    PLUGIN_PROC,
+    init,
+    term,
+    run,
     "Launch the LUDA WS server",
     ":shrug:",
     "LUDA",
-    "Ctrl-Alt-L" // Example: "Ctrl-Alt-S"
+    "Ctrl-Alt-L"
 };
