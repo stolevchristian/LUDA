@@ -7,6 +7,11 @@ if(WIN32)
     set(CMAKE_SYSTEM_VERSION 10.0)  # or your Windows SDK version
 endif()
 
+# Because obviously??
+set(VCPKG_TARGET_TRIPLET "x64-windows-static")
+
+set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 # Recursively find all .cpp files in ida_sdk
 file(GLOB_RECURSE IDA_SDK_SOURCES
         "${CMAKE_SOURCE_DIR}/IdaSDK/*.cpp"
@@ -30,7 +35,10 @@ add_library(LUDA SHARED
 )
 
 file(GLOB IDA_LIBS "${CMAKE_SOURCE_DIR}/IdaSDK/libs/*.lib")
-target_link_libraries(${PROJECT_NAME} PRIVATE ${IDA_LIBS})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        ${IDA_LIBS}
+        ${CMAKE_SOURCE_DIR}/keystone/keystone.lib
+)
 
 # Makes everything just look better, maybe just my opinion
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE

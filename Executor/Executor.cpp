@@ -6,6 +6,7 @@
 #include "Libraries/xrefs.hpp"
 #include "Libraries/strings.hpp"
 #include "Libraries/patching.hpp"
+#include "Libraries/assembler.hpp"
 
 Executor::Executor()
 {
@@ -94,6 +95,9 @@ bool Executor::initialize()
 	LUA_REGISTER_TABLE_FUNC(this->L, "image", "base", (lua_CFunction)LUDA::Library::c_get_imagebase);
 	LUA_REGISTER_TABLE_FUNC(this->L, "image", "first", (lua_CFunction)LUDA::Library::c_get_first_address);
 	LUA_REGISTER_TABLE_FUNC(this->L, "image", "last", (lua_CFunction)LUDA::Library::c_get_last_address);
+
+
+	lua_register(this->L, "assemble", (lua_CFunction)LUDA::Library::c_assemble);
 
 	return true;
 }
