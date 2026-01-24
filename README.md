@@ -10,6 +10,7 @@
 > [!IMPORTANT]  
 > **LUDA** is still WIP and is not production ready. It has recently switched to using Lua 5.5 instead of Lua 5.1 due to Lua 5.1 not supporting 64-bit correctly.
 
+## MADE FOR x86_64, ANYTHING ELSE IS NOT SUPPORTED OR PLANNED.
 ---
 ## UI Preview
 #### The user interface is not yet public but if you want to create your own you can do so by reading comm protocol in ludasocket.h and ludasocket.cpp.
